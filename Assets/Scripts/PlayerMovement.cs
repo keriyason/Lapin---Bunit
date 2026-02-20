@@ -33,7 +33,6 @@ public class PlayerMovement : MonoBehaviour
         rb = GetComponent<Rigidbody2D>();
     }
 
-    // Update is called once per frame
     void FixedUpdate()
     {
 
@@ -42,52 +41,49 @@ public class PlayerMovement : MonoBehaviour
         moveInput = Input.GetAxis("Horizontal");
         rb.velocity = new Vector2(moveInput * speed, rb.velocity.y);
 
-        if (Mathf.Abs(moveInput) > 0.01f) // if the player ismoving play walking animation
-        {
-            animator.Play(walkAnim);
-            print("walking");
-        }
-        else // if not revert to idle animation
-        {
-            animator.Play(idleAnim);
-            print("not walking");
-
-        }
-   
-        if (facingRight == false && moveInput > 0)
-        {
+        if (!facingRight && moveInput > 0)
             FLip();
-        }
-        else if (facingRight == true && moveInput < 0)
-        {
+        else if (facingRight && moveInput < 0)
             FLip();
-        }
     }
 
     void Update()
     {
-
         if (isGrounded && rb.velocity.y <= 0.01f)
-        {
             extraJumps = extraJumpsValue;
+
+        if (!isGrounded)
+        {
+            animator.Play(jumpAnim);
+        }
+        else
+        {
+            if (Mathf.Abs(moveInput) > 0.01f)
+            {
+                animator.Play(walkAnim);
+                print("walking");
+            }
+            else
+            {
+                animator.Play(idleAnim);
+                print("not walking");
+            }
         }
 
         if (Input.GetButtonDown("Jump"))
-
+        {
             if (isGrounded)
-        {
-            rb.velocity = Vector2.up * jumpForce;
-             animator.Play(jumpAnim);
-            
-        }
-        else if (extraJumps > 0)
-        {
-            rb.velocity = Vector2.up * jumpForce;
-                extraJumps--;
-                Debug.Log("Grounded: " + isGrounded);
+            {
+                rb.velocity = Vector2.up * jumpForce;
                 animator.Play(jumpAnim);
-
             }
+            else if (extraJumps > 0)
+            {
+                rb.velocity = Vector2.up * jumpForce;
+                extraJumps--;
+                animator.Play(jumpAnim);
+            }
+        }
     }
 
     void FLip()
@@ -98,3 +94,4 @@ public class PlayerMovement : MonoBehaviour
         transform.localScale = Scaler;
     }
 }
+    
