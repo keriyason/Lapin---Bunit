@@ -4,8 +4,10 @@ using UnityEngine;
 
 public class PlayerMovement : MonoBehaviour
 {
-
+    [Header("Speed")]
     public float speed;
+
+    [Header("Jump")]
     public float jumpForce;
     private float moveInput;
 
@@ -14,20 +16,33 @@ public class PlayerMovement : MonoBehaviour
     static readonly int jumpAnim = Animator.StringToHash("Jump");
 
     private Rigidbody2D rb;
+
+    [Header("Animator")]
     public Animator animator;
 
     private bool facingRight = true;
 
     private bool isGrounded;
+
     [Header("Ground")]
     public Transform groundCheck;
     public float checkRadius;
     public LayerMask whatIsGround;
 
     private int extraJumps;
+
+    [Header("Double Jump")]
     public int extraJumpsValue;
 
-    // Use this for initialization
+    private bool isTouchingWall = false;
+    private bool hasWallJumped = false;
+
+    [Header("Wall Jump")]
+    public float wallJump = 10f;
+    public Transform wallCheck;
+    public LayerMask whatIsWall;
+    public float wallCheckRadius;
+
     void Start()
     {
         extraJumps = extraJumpsValue;
@@ -36,8 +51,8 @@ public class PlayerMovement : MonoBehaviour
 
     void FixedUpdate()
     {
-
         isGrounded = Physics2D.OverlapCircle(groundCheck.position, checkRadius, whatIsGround);
+        isTouchingWall = Physics2D.OverlapCircle(wallCheck.position, wallCheckRadius, whatIsWall);
 
         moveInput = Input.GetAxis("Horizontal");
         rb.velocity = new Vector2(moveInput * speed, rb.velocity.y);
@@ -54,21 +69,13 @@ public class PlayerMovement : MonoBehaviour
             extraJumps = extraJumpsValue;
 
         if (!isGrounded)
-        {
             animator.Play(jumpAnim);
-        }
         else
         {
             if (Mathf.Abs(moveInput) > 0.01f)
-            {
                 animator.Play(walkAnim);
-                print("walking");
-            }
             else
-            {
                 animator.Play(idleAnim);
-                print("not walking");
-            }
         }
 
         if (Input.GetButtonDown("Jump"))
@@ -76,6 +83,14 @@ public class PlayerMovement : MonoBehaviour
             if (isGrounded)
             {
                 rb.velocity = Vector2.up * jumpForce;
+                animator.Play(jumpAnim);
+                hasWallJumped = false;
+            }
+            else if (isTouchingWall && !hasWallJumped)
+            {
+                hasWallJumped = true;
+                float pushDirection = facingRight ? -1 : 1;
+                rb.velocity = new Vector2(pushDirection * wallJump, jumpForce);
                 animator.Play(jumpAnim);
             }
             else if (extraJumps > 0)
@@ -85,6 +100,9 @@ public class PlayerMovement : MonoBehaviour
                 animator.Play(jumpAnim);
             }
         }
+
+        if (!isTouchingWall)
+            hasWallJumped = false;
     }
 
     void FLip()
@@ -95,4 +113,3 @@ public class PlayerMovement : MonoBehaviour
         transform.localScale = Scaler;
     }
 }
-    
