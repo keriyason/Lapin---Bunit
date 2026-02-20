@@ -19,6 +19,7 @@ public class PlayerMovement : MonoBehaviour
     private bool facingRight = true;
 
     private bool isGrounded;
+    [Header("Ground")]
     public Transform groundCheck;
     public float checkRadius;
     public LayerMask whatIsGround;
