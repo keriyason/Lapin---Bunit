@@ -14,6 +14,7 @@ public class PlayerMovement : MonoBehaviour
     static readonly int walkAnim = Animator.StringToHash("Walking Right");
     static readonly int idleAnim = Animator.StringToHash("Idle2");
     static readonly int jumpAnim = Animator.StringToHash("Jump");
+    static readonly int wallJumpAnim = Animator.StringToHash("WallJump");
 
     private Rigidbody2D rb;
 
