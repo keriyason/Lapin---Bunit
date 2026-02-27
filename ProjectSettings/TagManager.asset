@@ -41,3 +41,30 @@ TagManager:
   - name: Default
     uniqueID: 0
     locked: 0
+  - name: 1Sky
+    uniqueID: 25217691
+    locked: 0
+  - name: 2CLouds
+    uniqueID: 170431595
+    locked: 0
+  - name: 3Hill4
+    uniqueID: 4103111357
+    locked: 0
+  - name: 4Bushes
+    uniqueID: 1592100043
+    locked: 0
+  - name: Platforms
+    uniqueID: 2866110481
+    locked: 0
+  - name: 5Folliage
+    uniqueID: 2811965767
+    locked: 0
+  - name: 6Flowers
+    uniqueID: 2932965039
+    locked: 0
+  - name: WindTunnel
+    uniqueID: 3905840475
+    locked: 0
+  - name: Bounce
+    uniqueID: 726117051
+    locked: 0
