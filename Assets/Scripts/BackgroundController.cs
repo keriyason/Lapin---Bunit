@@ -4,15 +4,28 @@ using UnityEngine;
 
 public class BackgroundController : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
+    private Vector2 startPos;
+    public Vector2 parallaxEffect;   // x = horizontal, y = vertical
+    private Transform cam;
+
+    private void Start()
     {
-        
+        cam = Camera.main.transform;   
+        startPos = transform.position;
     }
 
-    // Update is called once per frame
-    void Update()
+    private void Update()
     {
-        
+        float distX = cam.position.x * parallaxEffect.x;
+        float distY = cam.position.y * parallaxEffect.y;
+
+        transform.position = new Vector3(
+            startPos.x + distX,
+            startPos.y + distY,
+            transform.position.z
+        );
     }
 }
+
+
+

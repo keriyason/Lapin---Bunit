@@ -62,9 +62,6 @@ TagManager:
   - name: 6Flowers
     uniqueID: 2932965039
     locked: 0
-  - name: WindTunnel
+  - name: Player
     uniqueID: 3905840475
-    locked: 0
-  - name: Bounce
-    uniqueID: 726117051
     locked: 0
