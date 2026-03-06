@@ -1,4 +1,4 @@
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -15,6 +15,7 @@ public class PlayerMovement : MonoBehaviour
     static readonly int idleAnim = Animator.StringToHash("Idle2");
     static readonly int jumpAnim = Animator.StringToHash("Jump");
     static readonly int wallJumpAnim = Animator.StringToHash("WallJump");
+    static readonly int doubleJumpAnim = Animator.StringToHash("DoubleJump"); // NEW
 
     private Rigidbody2D rb;
 
@@ -22,7 +23,6 @@ public class PlayerMovement : MonoBehaviour
     public Animator animator;
 
     private bool facingRight = true;
-
     private bool isGrounded;
 
     [Header("Ground")]
@@ -92,13 +92,13 @@ public class PlayerMovement : MonoBehaviour
                 hasWallJumped = true;
                 float pushDirection = facingRight ? -1 : 1;
                 rb.velocity = new Vector2(pushDirection * wallJump, jumpForce);
-                animator.Play(jumpAnim);
+                animator.Play(wallJumpAnim);
             }
             else if (extraJumps > 0)
             {
                 rb.velocity = Vector2.up * jumpForce;
                 extraJumps--;
-                animator.Play(jumpAnim);
+                animator.Play(doubleJumpAnim); // NEW — plays double jump animation
             }
         }
 
