@@ -4,12 +4,12 @@ using UnityEngine;
 
 public class KillZone : MonoBehaviour
 {
-    [SerializeField] Transform spawnPoint;
-
-
-    void OnCollisionEnter2D(Collision2D col)
+    private void OnTriggerEnter2D(Collider2D other)
     {
-        if (col.transform.CompareTag("Player"))
-            col.transform.position = spawnPoint.position;
+        if (other.CompareTag("Player"))
+        {
+            Vector3 respawnPos = CheckpointManager.Instance.GetCheckpoint();
+            other.transform.position = respawnPos;
+        }
     }
 }
