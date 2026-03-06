@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class CheckpointManager : MonoBehaviour
 {
@@ -50,6 +51,12 @@ public class CheckpointManager : MonoBehaviour
         carrotsCollected++;
         currentCheckpoint = position;
         hasCheckpointSaved = true;
+
+        if (carrotsCollected >= maxCarrots)
+        {
+            SceneManager.LoadScene("Win");
+        }
+
     }
 
     public Vector3 GetCheckpoint()
